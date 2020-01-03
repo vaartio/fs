@@ -6,7 +6,7 @@ const Persons = (props) => {
     return (
         <ul>
             {props.items.map((item, index) =>
-                <Person key={index} name={item.name} />
+                <Person key={index} data={item} onClick={props.onItemClick(item)} />
             )}
         </ul>
     )
