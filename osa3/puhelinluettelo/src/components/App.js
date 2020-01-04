@@ -87,6 +87,10 @@ const App = () => {
         setSearch('')
         setSearchResults(updatedPersons)
       })
+      .catch(error => {
+        console.log(error.response.data)
+        setNotification(error.response.data.error, 'error')
+      })
   }
 
   const onItemClick = (item) => {
