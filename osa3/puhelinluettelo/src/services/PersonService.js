@@ -1,5 +1,5 @@
 import axios from 'axios'
-const baseUrl = 'http://localhost:3001/api/persons'
+const baseUrl = '/api/persons'
 
 const getBiggestId = entries => {
     return entries.reduce((prev, cur) => !prev || cur.id > prev.id ? cur.id : prev.id)
