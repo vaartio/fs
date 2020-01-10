@@ -9,6 +9,7 @@ const anecdotesAtStart = [
 
 export const ACTION_NEW_ANECDOTE = 'NEW_ANECDOTE'
 export const ACTION_VOTE_ANECDOTE = 'VOTE_ANECDOTE'
+export const ACTION_INIT_ANECDOTE = 'INIT_NOTES'
 
 const getId = () => (100000 * Math.random()).toFixed(0)
 
@@ -24,10 +25,12 @@ export const initialAnecdotes = anecdotesAtStart.map(anecdoteFactory)
 
 const initialState = initialAnecdotes
 
-const anecdoteReducer = (state = initialState, action) => {
+const anecdoteReducer = (state = [], action) => {
   //console.log('state now: ', state)
   //console.log('action', action)
   switch (action.type) {
+    case ACTION_INIT_ANECDOTE:
+      return action.data
     case ACTION_NEW_ANECDOTE:
       return [...state, action.data]
     case ACTION_VOTE_ANECDOTE:
@@ -36,6 +39,13 @@ const anecdoteReducer = (state = initialState, action) => {
       )
     default:
       return state
+  }
+}
+
+export const initializeAnecdotes = (anecdotes) => {
+  return {
+    type: ACTION_INIT_ANECDOTE,
+    data: anecdotes,
   }
 }
 
