@@ -3,8 +3,10 @@ import {
   BrowserRouter as Router,
   Route, Link, Redirect, withRouter
 } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import Notification from './Notification'
+import { setNotification } from './noficationReducer'
 
 const Menu = () => {
   const padding = {
@@ -104,7 +106,7 @@ const Anecdote = ({ anecdote }) => {
   )
 }
 
-const App = () => {
+const App = ({ setNotification }) => {
   const [anecdotes, setAnecdotes] = useState([
     {
       content: 'If it hurts, do it more often',
@@ -122,15 +124,10 @@ const App = () => {
     }
   ])
 
-  const [notification, setNotification] = useState(null)
-
   const addNew = (anecdote) => {
     anecdote.id = (Math.random() * 10000).toFixed(0)
     setAnecdotes(anecdotes.concat(anecdote))
-    setNotification(`a new anecdote "${anecdote.content}" created!`)
-    setTimeout(() => {
-      setNotification(null)
-    }, 10000)
+    setNotification(`a new anecdote "${anecdote.content}" created!`, 10)
   }
 
   const anecdoteById = (id) =>
@@ -153,7 +150,7 @@ const App = () => {
       <Router>
         <div>
           <Menu />
-          <Notification message={notification} />
+          <Notification />
           <Route exact path="/" render={() =>
             <AnecdoteList anecdotes={anecdotes} />
           } />
@@ -173,4 +170,4 @@ const App = () => {
   )
 }
 
-export default App
+export default connect(null, { setNotification })(App)
